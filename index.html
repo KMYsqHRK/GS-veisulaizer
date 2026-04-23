@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaussian Splat Viewer</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #04060f; }
+    #root { width: 100vw; height: 100vh; }
+  </style>
+
+  <!--
+    importmap: ブラウザネイティブのモジュール解決
+    react / react-dom / three を esm.sh CDN から提供
+  -->
+  <script type="importmap">
+    {
+      "imports": {
+        "react":             "https://esm.sh/react@18.3.1",
+        "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+        "react-dom/client":  "https://esm.sh/react-dom@18.3.1/client",
+        "three":             "https://esm.sh/three@0.162.0"
+      }
+    }
+  </script>
+
+  <!-- Babel Standalone: JSX → JS をランタイムで変換 -->
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!--
+    data-type="module" により Babel が ES Modules として処理し、
+    ./gaussian-splat-viewer.jsx を fetch → transpile → blob URL で読み込む
+  -->
+  <script type="text/babel" data-type="module">
+    import { createRoot } from 'react-dom/client';
+    import GaussianSplatViewer from './gaussian-splat-viewer.jsx';
+
+    createRoot(document.getElementById('root')).render(
+      <GaussianSplatViewer />
+    );
+  </script>
+</body>
+</html>
